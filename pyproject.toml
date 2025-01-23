@@ -7,6 +7,10 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
+sqlalchemy = "^2.0.37"
+fastapi = {extras = ["all"], version = "^0.115.6"}
+alembic = "^1.14.1"
+mysql-connector-python = "^9.2.0"
 
 
 [tool.poetry.group.dev.dependencies]
