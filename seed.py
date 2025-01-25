@@ -32,6 +32,7 @@ def seed_data():
 
         activity_food = Activity(name="Еда")
         activity_meat = Activity(name="Мясная продукция", parent=activity_food)
+        activity_meat_cow = Activity(name="Мясо коров", parent=activity_meat)
         activity_milk = Activity(name="Молочная продукция", parent=activity_food)
 
         activity_cars = Activity(name="Автомобили")
@@ -41,7 +42,7 @@ def seed_data():
             name="ООО 'Рога и Копыта'",
             phone_numbers="2-222-222, 3-333-333",
             building=building1,
-            activities=[activity_food, activity_meat],
+            activities=[activity_food, activity_meat, activity_meat_cow],
         )
         organization2 = Organization(
             name="ООО 'Молочная Ферма'",
@@ -49,7 +50,12 @@ def seed_data():
             building=building2,
             activities=[activity_food, activity_milk],
         )
-
+        organization3 = Organization(
+            name="ООО 'Автозапчасти'",
+            phone_numbers="8-923-236-45-03",
+            building=building2,
+            activities=[activity_cars, activity_parts],
+        )
         session.add_all(
             [
                 building1,
@@ -61,6 +67,9 @@ def seed_data():
                 activity_parts,
                 organization1,
                 organization2,
+                organization3,
+                activity_meat_cow,
+                activity_parts,
             ]
         )
 
@@ -74,6 +83,9 @@ def seed_data():
 
 
 def main():
+    if settings.ENV != "development":
+        print("Тестовые данные можно добавлять только в окружении разработки!")
+        exit(1)
     Base.metadata.create_all(bind=engine)
     print("Таблицы созданы.")
     seed_data()

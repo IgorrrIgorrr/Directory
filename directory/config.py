@@ -8,6 +8,7 @@ class Settings(BaseSettings):
     DB_PORT: str
     DB_NAME: str
     API_KEY: str
+    ENV: str
 
     @property
     def DATABASE_URL(self):
