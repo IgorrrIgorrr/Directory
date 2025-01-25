@@ -49,20 +49,12 @@ class OrganizationRepository:
             descendants = self._session.scalars(
                 select(Activity.id).where(Activity.parent_id == activity_id)
             ).all()
-            print("descendants", descendants)
-            ids = set(descendants)
-            print("ids-set", ids)
             for descendant in descendants:
-                print("descendant", descendant)
                 main_ids.add(descendant)
                 main_ids.update(get_descendant_ids(descendant))
-                print("main_ids", main_ids)
-                print("ids2", ids)
-            print("ids3", ids)
             return main_ids
 
         activity_ids = {root_activity_id, *get_descendant_ids(root_activity_id)}
-        print("activity_ids", activity_ids)
         return self._session.scalars(
             select(Organization)
             .distinct()
